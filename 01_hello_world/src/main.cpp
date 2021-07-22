@@ -8,7 +8,6 @@ void printMessageFor(const char* name)
 void printMessage()
 {
 	printMessageFor("Ionut Verzea");
-	printMessageFor("CPP class");
 }
 
 int main()
