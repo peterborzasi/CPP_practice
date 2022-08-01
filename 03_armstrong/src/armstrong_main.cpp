@@ -1,9 +1,37 @@
 #include <iostream>
+#include <string>
+#include <cmath>
+#include <stdlib.h>
 
 bool isArmstrongNumber(int number)
 {
 	// TODO: implement some functionality to see if this number is an armstrong number
 
+	// if we define an Armstrong a number as: the sum of its own digits each raised to the power of the number of digits
+	
+
+	int sum = 0;
+	int	lastDigit = 0;
+	int temp = number;
+	int numberOfDigits = 0;
+	
+	// we need to check the number of digits, could also take it as a parameter of the size of string argument -1
+	while (temp != 0) {
+		temp /= 10;
+		++numberOfDigits;
+	}
+	temp = number;
+
+	while (temp != 0) {
+		lastDigit = temp % 10;
+		sum += round(pow(lastDigit, numberOfDigits));
+		temp /= 10;
+	}
+
+	if (sum == number)
+	{
+		return true;
+	}
 	return false;
 }
 
@@ -47,11 +75,19 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
+	// Check if argument is a number
+	if (std::atoi(argv[1]) == 0)
+	{
+		printf("NAN");
+		return 1;
+	}
+
 	int readNumber = 0;
 	// Get the first argument
 	std::string argumentAsString = argv[1];
 	
 	// TODO: read number / cast to integer
+	readNumber = std::stoi(argumentAsString);
 
 	printIsArmstrong(readNumber);
 	return 0;
