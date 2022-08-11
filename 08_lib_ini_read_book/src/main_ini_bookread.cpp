@@ -1,5 +1,6 @@
 // Includes
 
+
 // C++ system headers
 #include <iostream>
 #include <sstream>
@@ -46,8 +47,36 @@ public:
 std::vector<Book> readBooksFromIniFile(const std::string& file_name)
 {
 	std::vector<Book> results;
+	int bookCount = 0;
+	//const char* bookCount;
 	// TODO: BEGIN read the file -------------------------------------
-	
+	CSimpleIniA ini;
+	ini.SetUnicode();
+	ini.LoadFile(file_name.c_str());
+
+	// get all sections
+	CSimpleIniA::TNamesDepend sections;
+	ini.GetAllSections(sections);
+
+	// get all keys in a section
+	CSimpleIniA::TNamesDepend keys;
+	ini.GetAllKeys("books", keys);
+
+	bookCount = atoi(ini.GetValue("books", "count"));
+	//std::cout << "book count from ini: " << bookCount << std::endl;
+
+	for (int i = 0; i < bookCount; i++)
+	{
+		Book myBook;
+		std::stringstream ss;
+		ss << "book." << (i + 1);
+		std::string section_name(ss.str());
+		myBook.name = ini.GetValue(section_name.c_str(),"name");
+		myBook.authors = ini.GetValue(section_name.c_str(), "author");
+
+		results.emplace_back(myBook);
+	}
+
 	// E.g. Book myBook;
 	//		// build the section name (E.g. book.1)
 	//		std::stringstream ss;
@@ -68,7 +97,7 @@ int main()
 	// Using the SimpleINI C++ Lib: https://github.com/brofield/simpleini
 
 	// Read the data
-	std::string input_data("PATH_TO_INI_FILE.ini");
+	std::string input_data("../../data/ermahgerd_berks.ini");
 	std::cout << "Reading the data from " << input_data << std::endl;
 	std::vector<Book> books_from_file = readBooksFromIniFile(input_data);
 
