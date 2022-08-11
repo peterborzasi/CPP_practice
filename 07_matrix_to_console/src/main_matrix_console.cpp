@@ -13,16 +13,29 @@ private:
 
 	// TODO: store the data
 	// hints: you can use std::string, std::vectors + string, char**, vector<vector<char>>, etc
+	std::vector<std::string> myMatrix;
+
 public:
-	Matrix(size_t numColumnsX, size_t numLinesY)
+	Matrix(const size_t numColumnsX, const size_t numLinesY)
 		// TODO: add functionality
 	{
 		// TODO: add functionality
+		this->column_count = numColumnsX;
+		this->line_count = numLinesY;
+		
+		//initialize vector with line count
+		for (int i = 0; i < line_count; i++)
+		{
+			myMatrix.push_back("ZZZZZZZZZZZZZZZZZZZZ");
+		}
 	}
+
 
 	// Set an entire line
 	void setLine(size_t line_number, const std::string& data)
 	{
+		//std::cout << data << std::endl;
+		myMatrix.at(line_number) = data;
 	}
 
 	//OPTIONAL
@@ -55,12 +68,31 @@ public:
 	void setCellXY(size_t x, size_t y, char cell_content)
 	{
 		// TODO: add functionality
+
+		//return if index is out of bounds
+		if (x >= column_count || y >= line_count)
+		{
+			//std::cout << "index out of bounds" << std::endl;
+			return;
+		}
+
+		myMatrix.at(y)[x] = cell_content;
+
 	}
 
 	void print()
 	{
 		// print all lines and columns
 		// TODO: add functionality
+		for (int i = 0; i < line_count; i++)
+		{
+			for (int j = 0; j < column_count; j++)
+			{
+				std::cout << myMatrix[i].at(j);
+			}
+		std::cout << std::endl;
+		}
+		std::cout << std::endl;
 	}
 };
 
